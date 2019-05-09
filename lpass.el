@@ -52,9 +52,8 @@
   "Column identifiers for tabulated-list.")
 
 (defconst lpass-identifiers-customize-choice (cons 'choice
-                                                   (mapcar (lambda (x) (list 'const x))
-                                                           (mapcar (lambda (x) (car x))
-                                                                   lpass-identifiers)))
+                                                   (mapcar (lambda (x) (list 'const (car x)))
+                                                           lpass-identifiers))
   "Choice of identifiers for customize.")
 
 (defvar-local lpass-current-group nil
