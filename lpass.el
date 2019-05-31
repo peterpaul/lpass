@@ -156,6 +156,7 @@ BUFFER can be a buffer or a buffer name, and should contain the output of 'lpass
   (let ((map (make-sparse-keymap)))
     (set-keymap-parent map tabulated-list-mode-map)
     (define-key map "w" #'lpass-list-copy-password)
+    (define-key map "u" #'lpass-list-copy-username)
     (define-key map "i" #'lpass-list-show)
     (define-key map "l" #'lpass-list-limit-group)
     (define-key map "r" #'lpass-list-reset-group)
@@ -213,6 +214,19 @@ BUFFER can be a buffer or a buffer name, and should contain the output of 'lpass
   (let ((id (tabulated-list-get-id pos)))
     (with-temp-buffer
       (shell-command (format "lpass show --password %s" (shell-quote-argument id))
+                     (current-buffer)
+                     "*lpass errors*")
+      (goto-char (point-min))
+      (set-mark (point))
+      (end-of-line)
+      (kill-region (mark) (point)))))
+
+(defun lpass-list-copy-username (pos)
+  "Add the account user at POS to the kill-ring."
+  (interactive "d")
+  (let ((id (tabulated-list-get-id pos)))
+    (with-temp-buffer
+      (shell-command (format "lpass show --username %s" (shell-quote-argument id))
                      (current-buffer)
                      "*lpass errors*")
       (goto-char (point-min))
