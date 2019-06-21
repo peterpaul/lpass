@@ -105,7 +105,8 @@ Return t when a user is logged in, nil otherwise."
                                       nil
                                       'confirm)))
   (unless (lpass-status)
-    (async-shell-command (format "lpass login %s" (shell-quote-argument lpass-user)))))
+    (async-shell-command (format "lpass login %s" (shell-quote-argument lpass-user))))
+  (lpass-list))
 
 (defun lpass-logout ()
   "Logout."
